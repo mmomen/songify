@@ -2,17 +2,28 @@
 <html>
 <head>
   <title>Songify</title>
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-  <%= @message %>
-  <div>
-    <ul>
-      <% @remarks.each do |remark| %>
-        <li> 
-          <%= remark %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <h2>Enter your album information:</h2>
+  <form action="/album">
+    <div>
+      <label for="album-title">Album title:</label>
+      <input id="album-title" type="text" name="album-title" placeholder="Rice and beans" required>
+      <div class="songs">
+        <!-- multiple songs -->
+        <!-- start with 1-3 -->
+        <div>
+          <% (1..20).each do |x| %>
+          <label>Track <%= x %></label>
+          <input id="track-<%= x %>"></input><br>
+          <% end %>
+        </div>
+
+        <!-- then make 10 default -->
+        <!-- ability to add more rows -->
+      </div>
+    </div>
+  </form>
 </body>
 </html>

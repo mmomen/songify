@@ -18,13 +18,21 @@ post '/album' do
   else
     erb :album
   end
-
-  # params.to_s
-  # "Your album: " + params["album-title"]
 end
 
-get '/album/*' do
-  
+get '/album/:id' do
+  @id = params[:id]
+  if @id.is_a? Integer
+    @album = Songify::AlbumRepo.get_single_album(@id)
+    if @album.nil?
+      "Album object is nil"
+    else
+      erb :album_detail
+    end
+  else
+    "ID is not an integer"
+  end
 end
 
 # {"album-title"=>"asd", "track-1"=>"asd", "track-2"=>"", "track-3"=>"", "track-4"=>"", "track-5"=>"", "track-6"=>"", "track-7"=>"", "track-8"=>"", "track-9"=>"", "track-10"=>""}
+# params.to_s

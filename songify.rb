@@ -24,6 +24,24 @@ module Songify
       @@db.exec(command)
     end
 
+    def self.get_single_album(id)
+      command = <<-SQL
+      SELECT * FROM albums
+      WHERE id = #{id}
+      LIMIT 1;
+      SQL
+
+      result = @@db.exec(command)
+      data = result.values[0]
+
+      if data.nil?
+        return nil
+      else
+        Songify::Album.new(data[0], data[1])
+      end
+
+    end
+
     def self.get_albums
       command = <<-SQL
       SELECT * FROM albums;
@@ -46,6 +64,7 @@ module Songify
 
       result = @@db.exec(command)
       data = result.values[0]
+      
       if data.nil?
         return nil
       else

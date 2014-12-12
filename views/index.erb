@@ -6,24 +6,26 @@
 </head>
 <body>
   <h2>Enter your album information:</h2>
-  <form action="/album">
+  <form method="POST" action="/album">
     <div>
       <label for="album-title">Album title:</label>
       <input id="album-title" type="text" name="album-title" placeholder="Rice and beans" required>
       <div class="songs">
-        <!-- multiple songs -->
-        <!-- start with 1-3 -->
-        <div>
-          <% (1..20).each do |x| %>
-          <label>Track <%= x %></label>
-          <input id="track-<%= x %>"></input><br>
+          <% (1..10).each do |x| %>
+          <% line = "track-" + x.to_s %>
+          <label for="<%= line %>">Track <%= x %></label>
+          <input id="<%= line %>" type="text" name="<%= line %>" <% if x == 1 %> required <% end %> /><br>
           <% end %>
-        </div>
-
-        <!-- then make 10 default -->
-        <!-- ability to add more rows -->
+        <!-- add ability to add more tracks -->
       </div>
     </div>
+    <div>
+      <input type="submit">
+    </div>
   </form>
+  <h2>Here's a list of all albums:</h2>
+  <% @albums.each do |album| %>
+    <p><a href="/album/<%= album.id %>"><%= album.title %></a></p>
+  <% end %>
 </body>
 </html>

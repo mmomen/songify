@@ -12,7 +12,7 @@ get '/' do
 end
 
 post '/album' do
-  @album = Songify::AlbumRepo.add_album(params["album-title"])
+  @album = Songify::AlbumRepo.add_album(params["album-title"], params["album-year"], params["album-genre"], params["album-cover"])
   if @album.nil?
     "HERMANO, YO ALBUM ALREADY BEEN ALL UP IN MY DATABASES"
   else

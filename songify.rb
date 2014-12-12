@@ -2,10 +2,13 @@ require 'pg'
 
 module Songify
   class Album
-    attr_reader :id, :title
-    def initialize(id, title)
+    attr_reader :id, :title, :year, :genre, :cover
+    def initialize(id, title, year, genre, cover)
       @id = id
       @title = title
+      @year = year
+      @genre = genre
+      @cover = cover
     end
   end
   
@@ -16,7 +19,10 @@ module Songify
       command = <<-SQL
       CREATE TABLE IF NOT EXISTS albums(
         id SERIAL,
-        title text,
+        title TEXT,
+        year INTEGER,
+        genre TEXT,
+        cover TEXT,
         PRIMARY KEY( id )
       );
       SQL
@@ -37,38 +43,39 @@ module Songify
       if data.nil?
         return nil
       else
-        Songify::Album.new(data[0], data[1])
+        Songify::Album.new(data[0], data[1], data[2], data[3], data[4])
       end
 
     end
 
     def self.get_albums
+      create_table
       command = <<-SQL
       SELECT * FROM albums;
       SQL
 
       result = @@db.exec(command)
       result.values.map do |x|
-        Album.new(x[0], x[1])
+        Album.new(x[0], x[1], x[2], x[3], x[4])
       end
     end
 
-    def self.add_album(title)
+    def self.add_album(title, year, genre, cover)
       create_table
       command = <<-SQL
-      INSERT INTO albums( title )
-      SELECT '#{title}' 
+      INSERT INTO albums( title, year, genre, cover )
+      SELECT '#{title}', '#{year}', '#{genre}', '#{cover}' 
       WHERE NOT EXISTS (SELECT * FROM albums WHERE title = '#{title}' )
       RETURNING *;
       SQL
 
       result = @@db.exec(command)
       data = result.values[0]
-      
+
       if data.nil?
         return nil
       else
-        Songify::Album.new(data[0], data[1])
+        Songify::Album.new(data[0], data[1], data[2], data[3], data[4])
       end
 
     end

@@ -5,19 +5,23 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-  <h2>Enter your album information:</h2>
+  <h2>NEW ALBUM? OH SHIZNITS, GIVE ME YO DEETS:</h2>
   <form method="POST" action="/album">
     <div>
       <label for="album-title">Album title:</label>
       <input id="album-title" type="text" name="album-title" placeholder="Rice and beans" required>
-      <div class="songs">
-          <% (1..10).each do |x| %>
-          <% line = "track-" + x.to_s %>
-          <label for="<%= line %>">Track <%= x %></label>
-          <input id="<%= line %>" type="text" name="<%= line %>" <% if x == 1 %> required <% end %> /><br>
-          <% end %>
-        <!-- add ability to add more tracks -->
-      </div>
+    </div>
+    <div>
+      <label for="album-year">Album year:</label>
+      <input id="album-year" type="number" name="album-year" required>
+    </div>
+    <div>
+      <label for="album-genre">Album genre:</label>
+      <input id="album-genre" type="text" name="album-genre" required>      
+    </div>
+    <div>
+      <label for="album-cover">Link to album cover:</label>
+      <input id="album-cover" type="url" name="album-cover" required>      
     </div>
     <div>
       <input type="submit">

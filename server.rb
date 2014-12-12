@@ -14,7 +14,7 @@ end
 post '/album' do
   @album = Songify::AlbumRepo.add_album(params["album-title"])
   if @album.nil?
-    erb :duplicate_album
+    "HERMANO, YO ALBUM ALREADY BEEN ALL UP IN MY DATABASES"
   else
     erb :album
   end

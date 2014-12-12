@@ -11,6 +11,26 @@
     <img src="<%= @album.cover %>" class="detail-img">
     <p>Year: <%= @album.year %></p>
     <p>Genre: <%= @album.genre %></p>    
+    <p>Tracks:</p>
+    <div>
+      <ol>
+        <% @tracks.each do |track| %>
+        <li><%= track.track_title %></li>
+        <% end %>
+      </ol>
+    </div>
   </div>
+
+  <form method="POST" action="/album/add-tracks">
+    <div class="add-tracks">
+      <label for="track1">Track to add:</label>
+      <input id="track1" type="text" name="track1" required>
+      <input type="hidden" name="album_id" value="<%= @album.id %>">
+      <!-- add ability to add more tracks -->
+    </div>
+    <div>
+      <input type="submit">
+    </div>
+  </form>
 </body>
 </html>

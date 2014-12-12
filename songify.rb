@@ -12,6 +12,15 @@ module Songify
     end
   end
   
+  class Track
+    attr_reader :id, :track_title, :album_id
+    def initialize(id, track_title, album_id)
+      @id = id
+      @track_title = track_title
+      @album_id = album_id
+    end
+  end
+
   class AlbumRepo
     @@db = PG.connect(dbname: 'songify-db')
     
@@ -75,15 +84,64 @@ module Songify
       if data.nil?
         return nil
       else
-        Songify::Album.new(data[0], data[1], data[2], data[3], data[4])
+        Album.new(data[0], data[1], data[2], data[3], data[4])
       end
 
     end
     
-    def self.clear_data 
+    def self.clear_data
       # TODO: implement
     end
   end
+
+  class TrackRepo
+    @@db = PG.connect(dbname: 'songify-db')
+
+    def self.create_table
+      command = <<-SQL
+      CREATE TABLE IF NOT EXISTS tracks(
+        id SERIAL,
+        track_title TEXT,
+        PRIMARY KEY( id ),
+        album_id INTEGER REFERENCES albums( id )
+      );
+      SQL
+
+      @@db.exec(command)
+    end
+
+    def self.add_tracks(track, album_id)
+      create_table
+      command = <<-SQL
+      INSERT INTO tracks( track_title, album_id )
+      VALUES ( '#{track}', '#{album_id}' )
+      RETURNING *;
+      SQL
+
+      @@db.exec(command)
+    end
+
+    def self.get_tracks(album_id)
+      create_table
+      command = <<-SQL
+      SELECT * FROM tracks WHERE album_id = '#{album_id}';
+      SQL
+
+      result = @@db.exec(command)
+
+      # if result.nil?
+        # return nil
+      # else
+      # p result.values
+        result.values.map do |x|
+          Track.new(x[0], x[1], x[2])
+        # end
+      end
+
+    end
+
+  end
+
 end
 
 # require all lib/ entities and repos files here

@@ -20,6 +20,14 @@ post '/album' do
   end
 end
 
+post '/album/add-tracks' do
+  # track_list = params.select {|k,v| k.to_s.match(/track/)}
+  track = params[:track1]
+  album_id = params[:album_id]
+  Songify::TrackRepo.add_tracks(track, album_id)
+  redirect to("/album/#{album_id}")
+end
+
 get '/album/:id' do
   @id = params[:id]
   
@@ -28,11 +36,14 @@ get '/album/:id' do
 
   if check_if_num
     @album = Songify::AlbumRepo.get_single_album(@id)
+    @tracks = Songify::TrackRepo.get_tracks(@id)
+    p @tracks
     if @album.nil?
       "This album does not exist."
     else
       erb :album_detail
     end
+
   else
     "ID should be a number"
   end

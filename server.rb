@@ -22,15 +22,19 @@ end
 
 get '/album/:id' do
   @id = params[:id]
-  if @id.is_a? Integer
+  
+  logic = /^[0-9]*$/
+  check_if_num = logic.match(@id) #check if id is a number
+
+  if check_if_num
     @album = Songify::AlbumRepo.get_single_album(@id)
     if @album.nil?
-      "Album object is nil"
+      "This album does not exist."
     else
       erb :album_detail
     end
   else
-    "ID is not an integer"
+    "ID should be a number"
   end
 end
 

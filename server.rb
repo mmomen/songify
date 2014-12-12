@@ -16,7 +16,7 @@ post '/album' do
   if @album.nil?
     "HERMANO, YO ALBUM ALREADY BEEN ALL UP IN MY DATABASES"
   else
-    erb :album
+    erb :album_detail
   end
 end
 

@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title><%= @album.title %></title>
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
-  <h1><%= @album.title %></h1>
+  <div>
+    <h1><%= @album.title %></h1>
+    <img src="<%= @album.cover %>" class="detail-img">
+    <p>Year: <%= @album.year %></p>
+    <p>Genre: <%= @album.genre %></p>    
+  </div>
 </body>
 </html>

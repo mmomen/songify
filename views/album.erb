@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Album Details</title>
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
   <div>
     <p><%= @album.title %></p>
     <p><%= @album.year %></p>
     <p><%= @album.genre %></p>
-    <p><%= @album.cover %></p>
+    <img src="<%= @album.cover %>">
     <!-- <p>It contains the following tracks:</p> -->
     <!-- <div>
       <% params["track"] %>

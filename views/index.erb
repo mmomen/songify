@@ -27,9 +27,11 @@
       <input type="submit">
     </div>
   </form>
-  <h2>Here's a list of all albums:</h2>
-  <% @albums.each do |album| %>
-    <p><a href="/album/<%= album.id %>"><%= album.title %></a></p>
-  <% end %>
+  <h2>All Albums Currently Available:</h2>
+  <ol>
+    <% @albums.each do |album| %>
+      <li><a href="/album/<%= album.id %>"><%= album.title %></a></li>
+    <% end %>
+  <ol>
 </body>
 </html>

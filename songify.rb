@@ -89,7 +89,7 @@ module Songify
     end
     
     def self.clear_data
-      # TODO: implement
+      # TODO: implement - for testing
     end
   end
 
@@ -142,5 +142,3 @@ module Songify
   end
 
 end
-
-# require all lib/ entities and repos files here

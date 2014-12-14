@@ -33,7 +33,7 @@ get '/album/:id' do
   @id = params[:id]
   
   logic = /^[0-9]*$/
-  check_if_num = logic.match(@id) #check if id is a number
+  check_if_num = logic.match(@id) #checks if id is a number
 
   if check_if_num
     @album = Songify::AlbumRepo.get_single_album(@id)
@@ -49,6 +49,3 @@ get '/album/:id' do
     "ID should be a number"
   end
 end
-
-# {"album-title"=>"asd", "track-1"=>"asd", "track-2"=>"", "track-3"=>"", "track-4"=>"", "track-5"=>"", "track-6"=>"", "track-7"=>"", "track-8"=>"", "track-9"=>"", "track-10"=>""}
-# params.to_s

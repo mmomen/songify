@@ -54,7 +54,6 @@ module Songify
       else
         Songify::Album.new(data[0], data[1], data[2], data[3], data[4])
       end
-
     end
 
     def self.get_albums
@@ -85,11 +84,20 @@ module Songify
       else
         Album.new(data[0], data[1], data[2], data[3], data[4])
       end
-
     end
-    
-    def self.clear_data
-      # TODO: implement - for testing
+
+    def self.edit_album_details(id, title, year, genre, cover)
+      command = <<-SQL
+      UPDATE albums
+      SET title = '#{title}', year = '#{year}', genre = '#{genre}', cover = '#{cover}'
+      WHERE albums.id = #{id}
+      RETURNING *;
+      SQL
+
+      result = @@db.exec(command)
+      data = result.values[0]
+
+      Album.new(data[0], data[1], data[2], data[3], data[4])
     end
   end
 
@@ -136,9 +144,6 @@ module Songify
           Track.new(x[0], x[1], x[2])
         # end
       end
-
     end
-
   end
-
 end

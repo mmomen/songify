@@ -48,4 +48,16 @@ get '/album/:id' do
   else
     "ID should be a number"
   end
+
+end
+
+post '/album/:id/edit-details' do
+  @id = params["hidden-album-id"]
+  @title = params["edit-album-title"]
+  @year = params["edit-album-year"]
+  @genre = params["edit-album-genre"]
+  @cover = params["edit-album-cover"]
+  @album = Songify::AlbumRepo.edit_album_details(@id, @title, @year, @genre, @cover)
+
+  redirect to("/album/#{@id}")
 end

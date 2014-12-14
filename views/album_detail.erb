@@ -21,6 +21,39 @@
     </div>
   </div>
 
+  <br>
+
+  <div>
+    <details>
+      <summary><b>Click here to edit album details</b></summary>
+      <form method="POST" action="/album/<%= @album.id %>/edit-details">
+        <div>
+          <label for="edit-album-title">Title:</label>
+          <input id="edit-album-title" type="text" name="edit-album-title" value="<%= @album.title %>" required>
+        </div>
+        <div>
+          <label for="edit-album-year">Year:</label>
+          <input id="edit-album-year" type="number" name="edit-album-year" value="<%= @album.year %>" required>
+        </div>
+        <div>
+          <label for="edit-album-genre">Genre:</label>
+          <input id="edit-album-genre" type="text" name="edit-album-genre" value="<%= @album.genre %>" required>      
+        </div>
+        <div>
+          <label for="edit-album-cover">Link to album cover:</label>
+          <input id="edit-album-cover" type="url" name="edit-album-cover" value="<%= @album.cover %>" required>      
+        </div>
+        <div>
+          <input id="hidden-album-id" type="hidden" name="hidden-album-id" value="<%= @album.id %>">
+          <input type="submit">
+        </div>
+      </form>
+    </details>
+  </div>
+  
+  <br>
+  <br>
+  
   <form method="POST" action="/album/add-tracks">
     <div class="add-tracks">
       <label for="track1">Track to add:</label>

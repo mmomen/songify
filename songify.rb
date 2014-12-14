@@ -131,7 +131,9 @@ module Songify
     def self.get_tracks(album_id)
       create_table
       command = <<-SQL
-      SELECT * FROM tracks WHERE album_id = '#{album_id}';
+      SELECT * FROM tracks 
+      WHERE album_id = '#{album_id}'
+      ORDER BY id;
       SQL
 
       result = @@db.exec(command)
@@ -144,6 +146,17 @@ module Songify
           Track.new(x[0], x[1], x[2])
         # end
       end
+    end
+
+    def self.edit_track(track_id, new_track_title)
+      command = <<-SQL
+      UPDATE tracks
+      SET track_title = '#{new_track_title}'
+      WHERE tracks.id = #{track_id};
+      SQL
+
+      @@db.exec(command)
+
     end
   end
 end

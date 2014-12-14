@@ -15,7 +15,18 @@
     <div>
       <ol>
         <% @tracks.each do |track| %>
-        <li><%= track.track_title %></li>
+        <li>
+          <details>
+            <summary><%= track.track_title %></summary>
+            <form method="POST" action="/album/<%= @album.id %>/<%= track.id %>/edit">
+              <div>
+                <label for="updated-track-name">Edit track name:</label>
+                <input id="updated-track-name" type="text" name="updated-track-name" value="<%= track.track_title %>">
+                <input type="submit">
+              </div>
+            </form>
+          </details>
+        </li>
         <% end %>
       </ol>
     </div>

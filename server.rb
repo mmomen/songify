@@ -59,7 +59,18 @@ post '/album/:id/edit-details' do
   @year = params["edit-album-year"]
   @genre = params["edit-album-genre"]
   @cover = params["edit-album-cover"]
+
   @album = Songify::AlbumRepo.edit_album_details(@id, @title, @year, @genre, @cover)
 
   redirect to("/album/#{@id}")
+end
+
+post '/album/:album_id/:track_id/edit' do
+  @album_id = params[:album_id]
+  @track_id = params[:track_id]
+  @new_track_title = params["updated-track-name"]
+
+  Songify::TrackRepo.edit_track(@track_id, @new_track_title)
+
+  redirect to("/album/#{@album_id}")
 end

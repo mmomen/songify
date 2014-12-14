@@ -74,3 +74,12 @@ post '/album/:album_id/:track_id/edit' do
 
   redirect to("/album/#{@album_id}")
 end
+
+post '/album/:album_id/:track_id/delete' do
+  @album_id = params[:album_id]
+  @track_id = params[:track_id]
+
+  Songify::TrackRepo.mark_deleted_track(@track_id)
+
+  redirect to("/album/#{@album_id}")
+end

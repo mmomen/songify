@@ -32,6 +32,7 @@ module Songify
         year INTEGER,
         genre TEXT,
         cover TEXT,
+        deleted BOOLEAN DEFAULT false,
         PRIMARY KEY( id )
       );
       SQL
@@ -110,6 +111,7 @@ module Songify
       CREATE TABLE IF NOT EXISTS tracks(
         id SERIAL,
         track_title TEXT,
+        deleted BOOLEAN DEFAULT false,
         PRIMARY KEY( id ),
         album_id INTEGER REFERENCES albums( id )
       );
@@ -134,6 +136,7 @@ module Songify
       command = <<-SQL
       SELECT * FROM tracks 
       WHERE album_id = '#{album_id}'
+      AND deleted = false
       ORDER BY id;
       SQL
 
@@ -144,8 +147,10 @@ module Songify
       # else
       # p result.values
         result.values.map do |x|
-          Track.new(x[0], x[1], x[2])
-        # end
+          # if x[3] = 'f' # use this instead of sql check for deleted item
+            Track.new(x[0], x[1], x[2])
+          #end
+        #end
       end
     end
 
@@ -157,7 +162,16 @@ module Songify
       SQL
 
       @@db.exec(command)
+    end
 
+    def self.mark_deleted_track(track_id)
+      command = <<-SQL
+      UPDATE tracks
+      SET deleted = true
+      WHERE tracks.id = '#{track_id}'
+      SQL
+
+      @@db.exec(command)
     end
   end
 end

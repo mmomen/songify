@@ -25,6 +25,9 @@
                 <input type="submit">
               </div>
             </form>
+            <form method="POST" action="/album/<%= @album.id %>/<%= track.id %>/delete">
+              <input type="submit" value="Click to delete this track">
+            </form>
           </details>
         </li>
         <% end %>

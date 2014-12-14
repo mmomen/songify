@@ -59,7 +59,8 @@ module Songify
     def self.get_albums
       create_table
       command = <<-SQL
-      SELECT * FROM albums;
+      SELECT * FROM albums
+      ORDER BY id;
       SQL
 
       result = @@db.exec(command)

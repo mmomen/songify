@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/json'
 require "sinatra/reloader" if development?
+require 'pry-byebug'
 
 require_relative 'songify.rb'
 
@@ -16,7 +17,7 @@ post '/album' do
   if @album.nil?
     "HERMANO, YO ALBUM ALREADY BEEN ALL UP IN MY DATABASES"
   else
-    erb :album_detail
+    redirect to("/album/#{@album.id}")
   end
 end
 

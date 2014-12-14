@@ -80,7 +80,6 @@ module Songify
 
       result = @@db.exec(command)
       data = result.values[0]
-
       if data.nil?
         return nil
       else

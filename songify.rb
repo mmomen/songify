@@ -142,15 +142,8 @@ module Songify
 
       result = @@db.exec(command)
 
-      # if result.nil?
-        # return nil
-      # else
-      # p result.values
-        result.values.map do |x|
-          # if x[3] = 'f' # use this instead of sql check for deleted item
-            Track.new(x[0], x[1], x[2])
-          #end
-        #end
+      result.values.map do |x|
+        Track.new(x[0], x[1], x[2]) # if x[3] = 'f' # use this instead of sql check for deleted item
       end
     end
 
